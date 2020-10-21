@@ -40,7 +40,7 @@ const askBitcoinPriceIntentHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'askBitcoinPrice';
     },
-    handle(handlerInput){
+    async handle(handlerInput){
         
         let speakOutput = '';
 
@@ -53,13 +53,13 @@ const askBitcoinPriceIntentHandler = {
           }
         };
 
-        axios.request(options).then(function (response) {
-	        speakOutput = response.data.bitcoin.inr || "shit";
-        }).catch(function (error) {
-	    console.error(error);
-        });
-        
-        
+        try{
+            const response = await axios.request(options)
+            speakOutput = response.data.bitcoin.inr || "shit";
+        }
+        catch(err){
+            speakOutput = "Sorry! There was an error fetching the latest bitcoin prices."
+        }
         
         return handlerInput.responseBuilder
             .speak(speakOutput)
