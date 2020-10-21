@@ -3,8 +3,9 @@
  * Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
  * session persistence, api calls, and more.
  * */
-const Alexa = require('ask-sdk-core');
 const axios = require("axios").default;
+const Alexa = require('ask-sdk-core');
+
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -44,22 +45,23 @@ const askBitcoinPriceIntentHandler = {
         
         let speakOutput = '';
 
-        // const options = {
-        //   url: 'https://rapidapi.p.rapidapi.com/simple/price',
-        //   params: {ids: 'bitcoin', vs_currencies: 'inr'},
-        //   headers: {
-        //     'x-rapidapi-host': 'coingecko.p.rapidapi.com',
-        //     'x-rapidapi-key': '613ae4b527msh997fea7f00d1118p14041djsn9d44fdd08842'
-        //   }
-        // };
+        const options = {
+          url: 'https://rapidapi.p.rapidapi.com/simple/price',
+          params: {ids: 'bitcoin', vs_currencies: 'inr'},
+          timeout : 6500,
+          headers: {
+            'x-rapidapi-host': 'coingecko.p.rapidapi.com',
+            'x-rapidapi-key': '613ae4b527msh997fea7f00d1118p14041djsn9d44fdd08842'
+          }
+        };
 
-        // try{
-        //     const response = await axios.request(options)
-        //     speakOutput = response.data.bitcoin.inr || "shit";
-        // }
-        // catch(err){
-        //     speakOutput = "Sorry! There was an error fetching the latest bitcoin prices."
-        // }
+        try{
+            const response = await axios.request(options)
+            speakOutput = response.data.bitcoin.inr || "shit";
+        }
+        catch(err){
+            speakOutput = "Sorry! There was an error fetching the latest bitcoin prices."
+        }
         
         return handlerInput.responseBuilder
             .speak("lele ye")
