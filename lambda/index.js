@@ -69,10 +69,10 @@ const askBitcoinPriceIntentHandler = {
   },
   async handle(handlerInput) {
     try {
-      let speakOutput = func();
+      let speakOutput = await func();
       return (
         handlerInput.responseBuilder
-          .speak(speakOutput || 'some error occured')
+          .speak(speakOutput.toString() || 'some error occured')
           //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
           .getResponse()
       );
