@@ -7,7 +7,7 @@ const axios = require('axios').default;
 const Alexa = require('ask-sdk-core');
 
 const func = async () => {
-  let speakOutput = "";
+  let speakOutput = '';
   const options = {
     timeout: 6500,
     url: 'https://rapidapi.p.rapidapi.com/simple/price',
@@ -68,13 +68,17 @@ const askBitcoinPriceIntentHandler = {
     );
   },
   async handle(handlerInput) {
-    let speakOutput = func();
-    return (
-      handlerInput.responseBuilder
-        .speak(speakOutput || 'some error occured')
-        //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-        .getResponse()
-    );
+    try {
+      let speakOutput = func();
+      return (
+        handlerInput.responseBuilder
+          .speak(speakOutput || 'some error occured')
+          //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+          .getResponse()
+      );
+    } catch (err) {
+      console.error('some error occured');
+    }
   },
 };
 
