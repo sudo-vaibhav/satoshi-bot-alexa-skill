@@ -22,8 +22,8 @@ const func = async () => {
     const response = await axios.get(options);
     speakOutput = response.data.bitcoin.inr;
   } catch (err) {
-    speakOutput =
-      'Sorry! There was an error fetching the latest bitcoin prices.';
+    speakOutput = err.toString();
+      //'Sorry! There was an error fetching the latest bitcoin prices.';
   }
   return speakOutput;
 };
