@@ -4,6 +4,7 @@
  * session persistence, api calls, and more.
  * */
 const Alexa = require('ask-sdk-core');
+const 
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -11,7 +12,7 @@ const LaunchRequestHandler = {
     },
     handle(handlerInput) {
         const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
-
+        
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
@@ -40,7 +41,27 @@ const askBitcoinPriceIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'askBitcoinPrice';
     },
     handle(handlerInput){
-        const speakOutput = 'Hello World!';
+        
+        let speakOutput = '';
+        const axios = require("axios").default;
+
+        const options = {
+          url: 'https://rapidapi.p.rapidapi.com/simple/price',
+          params: {ids: 'bitcoin', vs_currencies: 'inr'},
+          headers: {
+            'x-rapidapi-host': 'coingecko.p.rapidapi.com',
+            'x-rapidapi-key': '613ae4b527msh997fea7f00d1118p14041djsn9d44fdd08842'
+          }
+        };
+
+        axios.request(options).then(function (response) {
+	        speakOutput = response.data.bitcoin.inr || "shit";
+        }).catch(function (error) {
+	    console.error(error);
+        });
+        
+        
+        
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
