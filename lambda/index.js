@@ -6,6 +6,27 @@
 const axios = require('axios').default;
 const Alexa = require('ask-sdk-core');
 
+const func = async () => {
+  const options = {
+    timeout: 6500,
+    url: 'https://rapidapi.p.rapidapi.com/simple/price',
+    params: { ids: 'bitcoin', vs_currencies: 'inr' },
+    headers: {
+      'x-rapidapi-host': 'coingecko.p.rapidapi.com',
+      'x-rapidapi-key': '613ae4b527msh997fea7f00d1118p14041djsn9d44fdd08842',
+    },
+  };
+
+  try {
+    const response = await axios.get(options);
+    speakOutput = response.data.bitcoin.inr;
+  } catch (err) {
+    speakOutput =
+      'Sorry! There was an error fetching the latest bitcoin prices.';
+  }
+  return speakOutput;
+};
+
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return (
@@ -45,32 +66,11 @@ const askBitcoinPriceIntentHandler = {
       Alexa.getIntentName(handlerInput.requestEnvelope) === 'askBitcoinPrice'
     );
   },
-  handle(handlerInput) {
-    const func = async () => {
-      const options = {
-        url: 'https://rapidapi.p.rapidapi.com/simple/price',
-        params: { ids: 'bitcoin', vs_currencies: 'inr' },
-        headers: {
-          'x-rapidapi-host': 'coingecko.p.rapidapi.com',
-          'x-rapidapi-key':
-            '613ae4b527msh997fea7f00d1118p14041djsn9d44fdd08842',
-        },
-      };
-
-      try {
-        const response = await axios.get(options);
-        speakOutput = response.data.bitcoin.inr;
-      } catch (err) {
-        speakOutput =
-          'Sorry! There was an error fetching the latest bitcoin prices.';
-      }
-      return speakOutput;
-    };
-
+  async handle(handlerInput) {
     let speakOutput = func();
     return (
       handlerInput.responseBuilder
-        .speak('hello rishita, get well soon!')
+        .speak(speakOutput || 'some error occured')
         //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
         .getResponse()
     );
