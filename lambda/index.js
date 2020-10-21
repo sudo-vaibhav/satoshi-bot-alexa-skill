@@ -55,8 +55,8 @@ const askBitcoinPriceIntentHandler = {
           };
         
           try {
-            const response = await axios.request(options);
-            speakOutput = response.data.bitcoin.inr || 'shit';
+            const response = await axios.get(options);
+            speakOutput = response.data.bitcoin.inr;
           } catch (err) {
             speakOutput =
               'Sorry! There was an error fetching the latest bitcoin prices.';
