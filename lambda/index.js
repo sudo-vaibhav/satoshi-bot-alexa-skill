@@ -22,7 +22,7 @@ const func = async () => {
       'https://rapidapi.p.rapidapi.com/simple/price',
       options
     );
-    speakOutput = response.data.bitcoin.inr;
+    speakOutput = `1 bitcoin is currently worth, ${response.data.bitcoin.inr} rupees. Woah! Should have invested sooner.`;
   } catch (err) {
     speakOutput = err.toString();
   }
