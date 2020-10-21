@@ -7,6 +7,7 @@ const axios = require('axios').default;
 const Alexa = require('ask-sdk-core');
 
 const func = async () => {
+  let speakOutput = "";
   const options = {
     timeout: 6500,
     url: 'https://rapidapi.p.rapidapi.com/simple/price',
