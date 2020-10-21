@@ -64,7 +64,7 @@ const askBitcoinPriceIntentHandler = {
         }
         
         return handlerInput.responseBuilder
-            .speak("lele ye")
+            .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
     }
