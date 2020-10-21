@@ -10,7 +10,6 @@ const func = async () => {
   let speakOutput = '';
   const options = {
     timeout: 6500,
-    url: 'https://rapidapi.p.rapidapi.com/simple/price',
     params: { ids: 'bitcoin', vs_currencies: 'inr' },
     headers: {
       'x-rapidapi-host': 'coingecko.p.rapidapi.com',
@@ -19,11 +18,13 @@ const func = async () => {
   };
 
   try {
-    const response = await axios.get(options);
+    const response = await axios.get(
+      'https://rapidapi.p.rapidapi.com/simple/price',
+      options
+    );
     speakOutput = response.data.bitcoin.inr;
   } catch (err) {
     speakOutput = err.toString();
-      //'Sorry! There was an error fetching the latest bitcoin prices.';
   }
   return speakOutput;
 };
@@ -44,21 +45,6 @@ const LaunchRequestHandler = {
       .getResponse();
   },
 };
-
-// const HelloWorldIntentHandler = {
-//     canHandle(handlerInput) {
-//         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-//             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
-//     },
-//     handle(handlerInput) {
-//         const speakOutput = 'Hello World!';
-
-//         return handlerInput.responseBuilder
-//             .speak(speakOutput)
-//             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-//             .getResponse();
-//     }
-// };
 
 const askBitcoinPriceIntentHandler = {
   canHandle(handlerInput) {
