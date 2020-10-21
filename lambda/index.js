@@ -4,7 +4,7 @@
  * session persistence, api calls, and more.
  * */
 const Alexa = require('ask-sdk-core');
-const 
+const axios = require("axios").default;
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -43,7 +43,6 @@ const askBitcoinPriceIntentHandler = {
     handle(handlerInput){
         
         let speakOutput = '';
-        const axios = require("axios").default;
 
         const options = {
           url: 'https://rapidapi.p.rapidapi.com/simple/price',
